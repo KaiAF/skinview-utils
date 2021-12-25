@@ -187,6 +187,14 @@ export function loadEarToCanvas(canvas: TextureCanvas, image: TextureSource): vo
 	context.drawImage(image, 0, 0, image.width, image.height);
 }
 
+export function loadKaiTailToCanvas(canvas: TextureCanvas, image: TextureSource): void {
+	canvas.width = 64;
+	canvas.height = 64;
+	const context = canvas.getContext("2d")!;
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.drawImage(image, 0, 0, image.width, image.height);
+}
+
 function isAreaBlack(context: CanvasImageData, x0: number, y0: number, w: number, h: number): boolean {
 	const imgData = context.getImageData(x0, y0, w, h);
 	for (let x = 0; x < w; x++) {
