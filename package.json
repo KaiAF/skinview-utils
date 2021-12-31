@@ -1,6 +1,6 @@
 {
   "name": "@kaiaf/skinview-utils",
-  "version": "0.6.2",
+  "version": "0.6.6",
   "description": "Utilities for working with Minecraft skins",
   "type": "module",
   "main": "build/index.js",
@@ -39,15 +39,16 @@
   "contributors": [
     "Sean Boult <hacksore@mcskinsearch.com> (https://github.com/Hacksore)",
     "Pig Fang <g-plane@hotmail.com> (https://github.com/g-plane)",
-    "Kent Rasmussen <hyprkookeez@gmail.com> (https://github.com/earthiverse)"
+    "Kent Rasmussen <hyprkookeez@gmail.com> (https://github.com/earthiverse)",
+    "KaiAF <kaiaf@protonmail.com> (https://livzmc.net)"
   ],
-  "homepage": "https://github.com/bs-community/skinview-utils#readme",
+  "homepage": "https://github.com/KaiAF/skinview-utils#readme",
   "bugs": {
-    "url": "https://github.com/bs-community/skinview-utils/issues"
+    "url": "https://github.com/KaiAF/skinview-utils/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bs-community/skinview-utils.git"
+    "url": "git+https://github.com/KaiAF/skinview-utils.git"
   },
   "dependencies": {
     "@types/offscreencanvas": "^2019.6.4"

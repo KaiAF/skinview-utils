@@ -187,12 +187,30 @@ export function loadEarToCanvas(canvas: TextureCanvas, image: TextureSource): vo
 	context.drawImage(image, 0, 0, image.width, image.height);
 }
 
-export function loadKaiTailToCanvas(canvas: TextureCanvas, image: TextureSource): void {
-	canvas.width = 64;
-	canvas.height = 64;
-	const context = canvas.getContext("2d")!;
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.drawImage(image, 0, 0, image.width, image.height);
+export function loadKaiTailToCanvas(canvas: TextureCanvas, image: TextureSource, config?: any): void {
+	if (config) {
+		config = config;
+		canvas.width = config.textureSize[0];
+		canvas.height = config.textureSize[1];
+		const context = canvas.getContext("2d")!;
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		context.drawImage(image, 0, 0, image.width, image.height);
+	} else {
+		throw new Error(`Invalid JSON config.`);
+	}
+}
+
+export function loadCheezeModelToCanvas(canvas: TextureCanvas, image: TextureSource, config?: any): void {
+	if (config) {
+		config = config;
+		canvas.width = config.textureSize[0];
+		canvas.height = config.textureSize[1];
+		const context = canvas.getContext("2d")!;
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		context.drawImage(image, 0, 0, image.width, image.height);
+	} else {
+		throw new Error(`Invalid JSON config.`);
+	}
 }
 
 function isAreaBlack(context: CanvasImageData, x0: number, y0: number, w: number, h: number): boolean {
