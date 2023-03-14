@@ -136,7 +136,7 @@ export function loadSkinToCanvas(canvas: TextureCanvas, image: TextureSource): v
 		}
 	}
 
-	const context = canvas.getContext("2d")!;
+	const context = <CanvasRenderingContext2D>canvas.getContext("2d")!;
 	if (isOldFormat) {
 		const sideLength = image.width;
 		canvas.width = sideLength;
@@ -164,25 +164,43 @@ function computeCapeScale(image: TextureSource): number {
 	} else if (image.width * 11 === image.height * 23) {
 		// 46x22
 		return image.width / 46;
+	} else if ((image.height % (image.width / 2)) == 0) {
+		// Supports animated capes sprite
+		// (height / (width/2) == total frames
+		// Total frames must be a whole number
+		return image.width / 64;
 	} else {
 		throw new Error(`Bad cape size: ${image.width}x${image.height}`);
 	}
 }
 
-export function loadCapeToCanvas(canvas: TextureCanvas, image: TextureSource): void {
+export function loadCapeToCanvas(canvas: TextureCanvas, image: TextureSource, frame?: number): void {
 	const scale = computeCapeScale(image);
 	canvas.width = 64 * scale;
 	canvas.height = 32 * scale;
 
-	const context = canvas.getContext("2d")!;
+	//Default a cape has a single frame unless animated
+	frame = frame != undefined ? frame : 1;
+
+	const frameWidth = image.width;
+	let frameHeight = image.height;
+	let frameOffset = 0;
+
+	//This checks if a cape is a sprite
+	if (frameHeight >= frameWidth) {
+		frameHeight = frameWidth / 2;
+		frameOffset = frameHeight * (frame - 1);
+	}
+
+	const context = <CanvasRenderingContext2D>canvas.getContext("2d")!;
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.drawImage(image, 0, 0, image.width, image.height);
+	context.drawImage(image, 0, frameOffset, frameWidth, frameHeight, 0, 0, frameWidth, frameHeight);
 }
 
 export function loadEarToCanvas(canvas: TextureCanvas, image: TextureSource): void {
 	canvas.width = 14;
 	canvas.height = 7;
-	const context = canvas.getContext("2d")!;
+	const context = <CanvasRenderingContext2D>canvas.getContext("2d")!;
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.drawImage(image, 0, 0, image.width, image.height);
 }
@@ -192,7 +210,7 @@ export function loadModelToCanvas(canvas: TextureCanvas, image: TextureSource, c
 		config = config;
 		canvas.width = config.textureSize[0];
 		canvas.height = config.textureSize[1];
-		const context = canvas.getContext("2d")!;
+		const context = <CanvasRenderingContext2D>canvas.getContext("2d")!;
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.drawImage(image, 0, 0, image.width, image.height);
 	} else {
@@ -260,7 +278,7 @@ export function inferModelType(canvas: TextureCanvas): ModelType {
 	// If the 4 areas are all black, the skin is also considered as slim.
 
 	const scale = computeSkinScale(canvas.width);
-	const context = canvas.getContext("2d")!;
+	const context = <CanvasRenderingContext2D>canvas.getContext("2d")!;
 	const checkTransparency = (x: number, y: number, w: number, h: number): boolean =>
 		hasTransparency(context, x * scale, y * scale, w * scale, h * scale);
 	const checkBlack = (x: number, y: number, w: number, h: number): boolean =>

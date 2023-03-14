@@ -1,6 +1,6 @@
 {
   "name": "@kaiaf/skinview-utils",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "Utilities for working with Minecraft skins",
   "type": "module",
   "main": "build/index.js",
